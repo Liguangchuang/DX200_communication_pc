@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -31,6 +30,8 @@ namespace bo_communication_with_dx200
          static byte[] result = new byte[1024];
          public string[,] EnterCoordination=new string[100,6];
          int NumofEnterCoordinationPoint=0;
+         int PicturePoint = 0;
+
 
          IPAddress ip = IPAddress.Parse("192.168.255.1");
          int port = 11000;
@@ -210,19 +211,9 @@ namespace bo_communication_with_dx200
 
             private void button3_Click(object sender, EventArgs e)
             {
-
-                for (int i = 0; i < 10; i++)
-                {
-                    /* code */
-                    MessageBox.Show(i.ToString());
-                }
-
-
-                for (int i = 0; i < 10; ++i)
-                {
-                    MessageBox.Show(i.ToString());
-                }
-                
+                string s = "2";
+                clientSocket.Send(Encoding.ASCII.GetBytes(s));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
+              
             }
 
             private void button7_Click(object sender, EventArgs e)
@@ -306,7 +297,7 @@ namespace bo_communication_with_dx200
                             // Image grabbed successfully?
                             if (grabResult.GrabSucceeded)
                             {
-                                string PictureAddress = "E:\\实验缓存照片\\"+System.DateTime.Now.Day.ToString()+System.DateTime.Now.Hour.ToString()+System.DateTime.Now.Second.ToString()+".png";
+                                string PictureAddress = "F:\\采集的照片\\"+System.DateTime.Now.Day.ToString()+System.DateTime.Now.Hour.ToString()+System.DateTime.Now.Second.ToString()+".png";
                                 ImagePersistence.Save(ImageFileFormat.Png, PictureAddress, grabResult);
 
 
@@ -341,11 +332,89 @@ namespace bo_communication_with_dx200
             }
 
             private void pictureBox2_Click(object sender, EventArgs e)
+            
+        {
+        
+         }
+
+            private void button9_Click(object sender, EventArgs e)
+            {
+
+                Image<Bgr, byte> scr = new Image<Bgr, byte>("C:\\Users\\Administrator\\Desktop\\直线轨迹.jpg");
+                //指定目录创建一张图片。
+
+                Image<Gray, byte> scr1 = new Image<Gray, byte>(scr.Width, scr.Height);
+                Image<Gray, byte> scr2 = new Image<Gray, byte>(scr.Width, scr.Height);
+                CvInvoke.CvtColor(scr, scr1, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+                //图像类型转换，bgr 转成 gray 类型。
+                CvInvoke.Threshold(scr1, scr2, 50, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
+                //对图像进行二值化操作。
+              scr2.Save("C:\\Users\\Administrator\\Desktop.png");
+              string pic1 = "C:\\Users\\Administrator\\Desktop.png";
+              pictureBox3.Load(pic1);
+                
+
+                byte[, ,] pixel = new byte[scr2.Width, scr2.Height, 0];
+                byte[, ,] pixel0 = new byte[scr2.Height, scr2.Width, 0];
+                pixel = scr2.Data;
+
+                CoordinationTransformation coordinationTransformation = new CoordinationTransformation();
+
+                int temp1 = 0;
+                string[] p1 = new string[120];
+
+                int j = 0;
+                int k = 0;
+                int[] TransformResult = new int[2];
+
+                do
+                {
+                    for (int i = 0; i < scr2.Width - 20; i++)
+                    {
+                        if (pixel[j, i, 0] == 0)
+                        {
+                           TransformResult= coordinationTransformation.sub((double)j, (double)i);
+                           p1[k] = TransformResult[0].ToString();
+                           p1[k + 1] = TransformResult[1].ToString();
+                            p1[k + 2] = (-209181).ToString();
+                            p1[k + 3] = (-1789992).ToString();
+                            p1[k + 4] = (-315122).ToString();
+                            p1[k + 5] = (65610).ToString();
+                            k = k + 6;
+                            break;
+                        }
+
+                        else temp1++;
+                    }
+                    j = j + 10;
+                }
+                while (j < scr2.Height - 20);
+
+                string M;
+                M = string.Join(",", p1);
+                
+
+
+                CvInvoke.WaitKey(0);
+
+            }
+
+            private void pictureBox3_Click(object sender, EventArgs e)
+            {
+                         
+            }
+
+            private void pictureBox1_Click(object sender, EventArgs e)
             {
 
             }
 
-            private void button9_Click(object sender, EventArgs e)
+            private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+            {
+                
+            }
+
+            private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
             {
 
             }
