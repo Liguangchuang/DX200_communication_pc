@@ -306,11 +306,11 @@ namespace bo_communication_with_dx200
                             // Image grabbed successfully?
                             if (grabResult.GrabSucceeded)
                             {
-                                string name = "E:\\实验缓存照片\\my_picture.png";
-                                ImagePersistence.Save(ImageFileFormat.Png, name, grabResult);
+                                string PictureAddress = "E:\\实验缓存照片\\"+System.DateTime.Now.Day.ToString()+System.DateTime.Now.Hour.ToString()+System.DateTime.Now.Second.ToString()+".png";
+                                ImagePersistence.Save(ImageFileFormat.Png, PictureAddress, grabResult);
 
 
-                                Mat original_picture = CvInvoke.Imread("E:\\实验缓存照片\\my_picture.png", LoadImageType.AnyColor);
+                                Mat original_picture = CvInvoke.Imread(PictureAddress, LoadImageType.AnyColor);
                                 string win1 = "original picture";
                                 CvInvoke.NamedWindow(win1, NamedWindowType.Normal);
                                 CvInvoke.Imshow(win1, original_picture);
@@ -320,7 +320,9 @@ namespace bo_communication_with_dx200
                                 CvInvoke.cvReleaseMat(ref mat);
                                 CvInvoke.DestroyWindow(win1);
 
-                                pictureBox1.Load("E:\\实验缓存照片\\my_picture.png");
+                                pictureBox1.Load(PictureAddress);
+                                pictureBox2.Load(PictureAddress);
+                                camera.Close();
 
 
                             }
@@ -335,6 +337,16 @@ namespace bo_communication_with_dx200
                 }
                
 
+
+            }
+
+            private void pictureBox2_Click(object sender, EventArgs e)
+            {
+
+            }
+
+            private void button9_Click(object sender, EventArgs e)
+            {
 
             }
 
