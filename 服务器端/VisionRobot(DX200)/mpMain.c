@@ -93,7 +93,6 @@ void ap_TCP_Sserver(ULONG portNo)
         while(1)
         {
             int     bytesRecv;
-            int     bytesSend;
             char    buff[(int)BUFF_MAX + 1];
 
             memset(buff, 0, sizeof(buff));
@@ -134,11 +133,6 @@ void ap_TCP_Sserver(ULONG portNo)
                
            
 
-            if (bytesSend != bytesRecv)
-                break;
-
-            if (strncmp(buff, "EXIT", 4) == 0 || strncmp(buff, "exit", 4) == 0)
-                break;
         }
         mpClose(acceptHandle);//关闭socket
     }

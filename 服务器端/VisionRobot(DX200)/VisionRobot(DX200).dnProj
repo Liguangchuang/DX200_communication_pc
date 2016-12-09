@@ -6,7 +6,7 @@
     <FileForProject>motoPlusMove.c</FileForProject>
     <FileForProject>mpMain.c</FileForProject>
   </FilesInProject>
-  <LastFileOpened>CalibrateLocation.c</LastFileOpened>
+  <LastFileOpened>mpMain.c</LastFileOpened>
   <UsrInit>False</UsrInit>
   <ProjectType>Executable</ProjectType>
   <Debug>
@@ -19,7 +19,7 @@
 </CompileCommand>
     <BuildCommand>mpbuilder\gnu\4.3.3-vxworks-6.9\x86-win32\bin\ccpentium.exe -nostdlib -r -WI,-X -WI~FileList~ -o "~OutputPath~"
 </BuildCommand>
-    <IncludeDir>G:\motoplus\mpbuilder\inc</IncludeDir>
+    <IncludeDir>D:\motoplus\mpbuilder\inc</IncludeDir>
   </Build>
   <ProjectFileVersion>v1.0.5</ProjectFileVersion>
   <ConvertTabs>False</ConvertTabs>
