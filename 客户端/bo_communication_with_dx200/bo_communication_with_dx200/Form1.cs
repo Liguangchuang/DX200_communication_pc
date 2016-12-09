@@ -31,6 +31,8 @@ namespace bo_communication_with_dx200
          public string[,] EnterCoordination=new string[100,6];
          int NumofEnterCoordinationPoint=0;
          int PicturePoint = 0;
+         string PictureAddress="";
+         string M;
 
 
          IPAddress ip = IPAddress.Parse("192.168.255.1");
@@ -57,7 +59,7 @@ namespace bo_communication_with_dx200
                 try
                 {
                     clientSocket.Connect(new IPEndPoint(ip, port)); //配置服务器IP与端口
-                    Console.WriteLine("连接服务器成功");
+                    
                     button1.BackColor=Color.Green;
 
                     Thread th = new Thread(recMsg);//新建后台接受信息线程。
@@ -68,7 +70,7 @@ namespace bo_communication_with_dx200
                 }
                 catch
                 {
-                    Console.WriteLine("连接服务器失败，请按回车键退出！");
+                    
                     button1.BackColor = Color.Red;
                     return;
                 }
@@ -86,11 +88,8 @@ namespace bo_communication_with_dx200
                     int num=clientSocket.Receive(result);
                     //Console.WriteLine("接收服务器消息：{0}", Encoding.ASCII.GetString(result));
 
-                    string RebackData=Encoding.ASCII.GetString(result);
-                    MessageBox.Show(RebackData);
-                    
-
-                    // Encoding.ASCII.GetString(result,0,result.Length);
+                   string RebackData=Encoding.ASCII.GetString(result);
+                   
                 }
                 catch
                 {
@@ -219,8 +218,8 @@ namespace bo_communication_with_dx200
             private void button7_Click(object sender, EventArgs e)
             {
 
-                string s = "112,2,3,4,5,6,1313,2,3,4,5,6,132,2,3,4,5,6";
-                clientSocket.Send(Encoding.ASCII.GetBytes(s));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
+                //string s = "923857, -38221, -209181, -1789992, -315122, 65610,1074305, -35249, -209211, -1789986, -315089, 65617";
+                clientSocket.Send(Encoding.ASCII.GetBytes(M));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
                 
 
 
@@ -288,8 +287,7 @@ namespace bo_communication_with_dx200
 
                     // camera.StreamGrabber.Stop() is called automatically by the RetrieveResult() method
                     // when c_countOfImagesToGrab images have been retrieved.
-                    while (camera.StreamGrabber.IsGrabbing)
-                    {
+                   
                         // Wait for an image and then retrieve it. A timeout of 5000 ms is used.
                         IGrabResult grabResult = camera.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
                         using (grabResult)
@@ -297,19 +295,19 @@ namespace bo_communication_with_dx200
                             // Image grabbed successfully?
                             if (grabResult.GrabSucceeded)
                             {
-                                string PictureAddress = "F:\\采集的照片\\"+System.DateTime.Now.Day.ToString()+System.DateTime.Now.Hour.ToString()+System.DateTime.Now.Second.ToString()+".png";
+                                PictureAddress = "E:\\实验缓存照片\\" + System.DateTime.Now.Day.ToString() + System.DateTime.Now.Hour.ToString() + System.DateTime.Now.Minute.ToString() + System.DateTime.Now.Second.ToString() + ".png";
                                 ImagePersistence.Save(ImageFileFormat.Png, PictureAddress, grabResult);
 
 
-                                Mat original_picture = CvInvoke.Imread(PictureAddress, LoadImageType.AnyColor);
-                                string win1 = "original picture";
-                                CvInvoke.NamedWindow(win1, NamedWindowType.Normal);
-                                CvInvoke.Imshow(win1, original_picture);
+                                //Mat original_picture = CvInvoke.Imread(PictureAddress, LoadImageType.AnyColor);
+                                //string win1 = "original picture";
+                                //CvInvoke.NamedWindow(win1, NamedWindowType.Normal);
+                                //CvInvoke.Imshow(win1, original_picture);
 
-                                CvInvoke.WaitKey(0);
-                                IntPtr mat = original_picture.Ptr;
-                                CvInvoke.cvReleaseMat(ref mat);
-                                CvInvoke.DestroyWindow(win1);
+                                //CvInvoke.WaitKey(0);
+                                //IntPtr mat = original_picture.Ptr;
+                                //CvInvoke.cvReleaseMat(ref mat);
+                                //CvInvoke.DestroyWindow(win1);
 
                                 pictureBox1.Load(PictureAddress);
                                 pictureBox2.Load(PictureAddress);
@@ -323,8 +321,8 @@ namespace bo_communication_with_dx200
                                 MessageBox.Show("something Wrong :Error: {0} {1}, grabResult.ErrorCode, grabResult.ErrorDescription");
                             }
                         }
-                    }
-                    camera.Parameters[PLCamera.ChunkModeActive].SetValue(false);
+                  
+                    
                 }
                
 
@@ -340,7 +338,7 @@ namespace bo_communication_with_dx200
             private void button9_Click(object sender, EventArgs e)
             {
 
-                Image<Bgr, byte> scr = new Image<Bgr, byte>("C:\\Users\\Administrator\\Desktop\\直线轨迹.jpg");
+                Image<Bgr, byte> scr = new Image<Bgr, byte>(PictureAddress);
                 //指定目录创建一张图片。
 
                 Image<Gray, byte> scr1 = new Image<Gray, byte>(scr.Width, scr.Height);
@@ -361,7 +359,7 @@ namespace bo_communication_with_dx200
                 CoordinationTransformation coordinationTransformation = new CoordinationTransformation();
 
                 int temp1 = 0;
-                string[] p1 = new string[120];
+                string[] p1 = new string[1200];
 
                 int j = 0;
                 int k = 0;
@@ -390,12 +388,10 @@ namespace bo_communication_with_dx200
                 }
                 while (j < scr2.Height - 20);
 
-                string M;
-                M = string.Join(",", p1);
                 
-
-
-                CvInvoke.WaitKey(0);
+                M = string.Join(",", p1);
+        
+                //CvInvoke.WaitKey(0);
 
             }
 
@@ -417,6 +413,12 @@ namespace bo_communication_with_dx200
             private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
             {
 
+            }
+
+            private void button10_Click(object sender, EventArgs e)
+            {
+                string s = "1";
+                clientSocket.Send(Encoding.ASCII.GetBytes(s));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
             }
 
      }

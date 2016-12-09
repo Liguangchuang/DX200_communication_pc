@@ -63,8 +63,8 @@ namespace bo_communication_with_dx200
             V = S2 + U;
           
 
-            result[0] =(int) V.Data[0, 0];
-            result[1] =(int) V.Data[0, 1];
+            result[0] =(int) (V.Data[0, 0]*1000);
+            result[1] =(int) (V.Data[0, 1]*1000);
 
 
           return (result);
