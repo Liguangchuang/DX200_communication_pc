@@ -19,28 +19,29 @@ namespace bo_communication_with_dx200
     {
         public int[] sub(double x1, double y1)
         {
-            double a = 3.0050; double b = 1.8004;
-            double x0 = 0; double y0 = 0; double z0 = 0;
+            double a = -1.3184;double b = 3.1416;double c=-3.0828;
             int[] result = new int[2];
+            double x0 = 0; double y0 = 0; double z0 = -209181;
 
             Matrix<double> V = new Matrix<double>(1, 3);
             V.Data[0, 0] = x0;
             V.Data[0, 1] = y0;
             V.Data[0, 2] = z0;
             Matrix<double> R = new Matrix<double>(1, 3);
-            R.Data[0, 0] = 0.791 * x1 + 143.966;
-            R.Data[0, 1] = 0.791 * y1 + 107.362;
+            R.Data[0, 0] = 77.3854 * x1 - 151680;
+            R.Data[0, 1] = 77.3854 * y1 - 57575;
             R.Data[0, 2] = 0;
             Matrix<double> S = new Matrix<double>(3, 3);
-            S.Data[0, 0] = 1;
-            S.Data[0, 1] = 0;
+            S.Data[0, 0] = Math.Cos(a);
+            S.Data[0, 1] = Math.Sin(a);
             S.Data[0, 2] = 0;
-            S.Data[1, 0] = 0;
+            S.Data[1, 0] = -Math.Sin(a);
             S.Data[1, 1] = Math.Cos(a);
-            S.Data[1, 2] = Math.Sin(a);
+            S.Data[1, 2] = 0;
             S.Data[2, 0] = 0;
-            S.Data[2, 1] = -Math.Sin(a);
-            S.Data[2, 2] = Math.Cos(a);
+            S.Data[2, 1] = 0;
+            S.Data[2, 2] = 1;
+
             Matrix<double> T = new Matrix<double>(3, 3);
             T.Data[0, 0] = 1;
             T.Data[0, 1] = 0;
@@ -51,20 +52,35 @@ namespace bo_communication_with_dx200
             T.Data[2, 0] = 0;
             T.Data[2, 1] = -Math.Sin(b);
             T.Data[2, 2] = Math.Cos(b);
+
+            Matrix<double> W = new Matrix<double>(3, 3);
+            W.Data[0, 0] = Math.Cos(c);
+            W.Data[0, 1] = Math.Sin(c);
+            W.Data[0, 2] = 0;
+            W.Data[1, 0] = -Math.Sin(c);
+            W.Data[1, 1] = Math.Cos(c);
+            W.Data[1, 2] = 0;
+            W.Data[2, 0] = 0;
+            W.Data[2, 1] = 0;
+            W.Data[2, 2] = 1;
+
             Matrix<double> U = new Matrix<double>(1, 3);
-            U.Data[0, 0] = 915.0406;
-            U.Data[0, 1] = -310.634;
-            U.Data[0, 2] = 0;
+            U.Data[0, 0] = 898220;
+            U.Data[0, 1] = -333120;
+            U.Data[0, 2] = -209181;
+
 
             Matrix<double> S1 = new Matrix<double>(1, 3);
             Matrix<double> S2 = new Matrix<double>(1, 3);
+              Matrix<double> S3 = new Matrix<double>(1, 3);
             S1 = R.Mul(S);
             S2 = S1.Mul(T);
-            V = S2 + U;
+            S3=S2.Mul(W);
+            V = S3+ U;
           
 
-            result[0] =(int) (V.Data[0, 0]*1000);
-            result[1] =(int) (V.Data[0, 1]*1000);
+            result[0] =(int) (V.Data[0, 0]);
+            result[1] =(int) (V.Data[0, 1]);
 
 
           return (result);

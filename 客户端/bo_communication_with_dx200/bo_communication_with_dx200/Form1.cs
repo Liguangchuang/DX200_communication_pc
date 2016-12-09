@@ -32,6 +32,7 @@ namespace bo_communication_with_dx200
          int NumofEnterCoordinationPoint=0;
          int PicturePoint = 0;
          string PictureAddress="";
+         string PictureProcessedAddress = "";
          string M;
 
 
@@ -217,7 +218,10 @@ namespace bo_communication_with_dx200
 
             private void button7_Click(object sender, EventArgs e)
             {
+                string s = "1";
+                clientSocket.Send(Encoding.ASCII.GetBytes(s));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
 
+                Thread.Sleep(1000);
                 //string s = "923857, -38221, -209181, -1789992, -315122, 65610,1074305, -35249, -209211, -1789986, -315089, 65617";
                 clientSocket.Send(Encoding.ASCII.GetBytes(M));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
                 
@@ -296,6 +300,8 @@ namespace bo_communication_with_dx200
                             if (grabResult.GrabSucceeded)
                             {
                                 PictureAddress = "E:\\实验缓存照片\\" + System.DateTime.Now.Day.ToString() + System.DateTime.Now.Hour.ToString() + System.DateTime.Now.Minute.ToString() + System.DateTime.Now.Second.ToString() + ".png";
+                                PictureProcessedAddress = "E:\\实验缓存照片\\" + System.DateTime.Now.Day.ToString() + System.DateTime.Now.Hour.ToString() + System.DateTime.Now.Minute.ToString() + System.DateTime.Now.Second.ToString() + "(Processed).png";
+                               
                                 ImagePersistence.Save(ImageFileFormat.Png, PictureAddress, grabResult);
 
 
@@ -347,19 +353,18 @@ namespace bo_communication_with_dx200
                 //图像类型转换，bgr 转成 gray 类型。
                 CvInvoke.Threshold(scr1, scr2, 50, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
                 //对图像进行二值化操作。
-              scr2.Save("C:\\Users\\Administrator\\Desktop.png");
-              string pic1 = "C:\\Users\\Administrator\\Desktop.png";
-              pictureBox3.Load(pic1);
+              scr2.Save(PictureProcessedAddress);
+              pictureBox3.Load(PictureProcessedAddress);
                 
 
-                byte[, ,] pixel = new byte[scr2.Width, scr2.Height, 0];
-                byte[, ,] pixel0 = new byte[scr2.Height, scr2.Width, 0];
+                byte[, ,] pixel = new byte[scr2.Cols, scr2.Rows, 0];          
                 pixel = scr2.Data;
 
                 CoordinationTransformation coordinationTransformation = new CoordinationTransformation();
 
                 int temp1 = 0;
-                string[] p1 = new string[1200];
+                string[] p1 = new string[1500];
+                //Point L=new Point();
 
                 int j = 0;
                 int k = 0;
@@ -367,11 +372,11 @@ namespace bo_communication_with_dx200
 
                 do
                 {
-                    for (int i = 0; i < scr2.Width - 20; i++)
+                    for (int i = 0; i < scr2.Cols - 20; i++)
                     {
                         if (pixel[j, i, 0] == 0)
                         {
-                           TransformResult= coordinationTransformation.sub((double)j, (double)i);
+                           TransformResult= coordinationTransformation.sub((double)i, (double)j);
                            p1[k] = TransformResult[0].ToString();
                            p1[k + 1] = TransformResult[1].ToString();
                             p1[k + 2] = (-209181).ToString();
@@ -379,6 +384,9 @@ namespace bo_communication_with_dx200
                             p1[k + 4] = (-315122).ToString();
                             p1[k + 5] = (65610).ToString();
                             k = k + 6;
+                          //  L.X = i; L.Y = j;
+                        //    CvInvoke.Circle(scr2, L, 1, new MCvScalar(0, 0, 255, 255), 10, LineType.EightConnected);
+
                             break;
                         }
 
@@ -386,7 +394,7 @@ namespace bo_communication_with_dx200
                     }
                     j = j + 10;
                 }
-                while (j < scr2.Height - 20);
+                while (j < scr2.Rows - 20);
 
                 
                 M = string.Join(",", p1);
@@ -419,6 +427,16 @@ namespace bo_communication_with_dx200
             {
                 string s = "1";
                 clientSocket.Send(Encoding.ASCII.GetBytes(s));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
+            }
+
+            private void button10_Click_1(object sender, EventArgs e)
+            {
+                string s = "1";
+                clientSocket.Send(Encoding.ASCII.GetBytes(s));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
+
+                Thread.Sleep(1000);
+                //string s = "923857, -38221, -209181, -1789992, -315122, 65610,1074305, -35249, -209211, -1789986, -315089, 65617";
+                clientSocket.Send(Encoding.ASCII.GetBytes(M));    //Encoding.ASCII.GetBytes(sendMessage)   //a,a.Length,SocketFlags.None
             }
 
      }

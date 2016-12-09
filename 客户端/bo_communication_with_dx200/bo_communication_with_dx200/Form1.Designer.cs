@@ -40,8 +40,6 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -129,6 +127,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button10);
             this.tabPage4.Controls.Add(this.label14);
             this.tabPage4.Controls.Add(this.label13);
             this.tabPage4.Controls.Add(this.button9);
@@ -176,7 +175,7 @@
             this.listBox3.ItemHeight = 12;
             this.listBox3.Location = new System.Drawing.Point(15, 228);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(413, 148);
+            this.listBox3.Size = new System.Drawing.Size(413, 124);
             this.listBox3.TabIndex = 4;
             this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
             // 
@@ -204,9 +203,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button10);
-            this.tabPage2.Controls.Add(this.listBox2);
-            this.tabPage2.Controls.Add(this.button7);
             this.tabPage2.Controls.Add(this.button6);
             this.tabPage2.Controls.Add(this.button5);
             this.tabPage2.Controls.Add(this.button4);
@@ -218,26 +214,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "示教程序调用";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 12;
-            this.listBox2.Location = new System.Drawing.Point(121, 218);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(214, 88);
-            this.listBox2.TabIndex = 5;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(121, 164);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(153, 23);
-            this.button7.TabIndex = 4;
-            this.button7.Text = "发送123";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
             // 
@@ -524,13 +500,13 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(373, 155);
+            this.button10.Location = new System.Drawing.Point(353, 358);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 23);
-            this.button10.TabIndex = 6;
-            this.button10.Text = "发布命令";
+            this.button10.TabIndex = 8;
+            this.button10.Text = "启动";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.button10.Click += new System.EventHandler(this.button10_Click_1);
             // 
             // Form1
             // 
@@ -588,8 +564,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button8;
