@@ -14,7 +14,7 @@ extern void CalibrateLocation(void);
 void location(char*string );
 static int tid1;
 #define PORT        11000 //端口号，
-#define BUFF_MAX    1023
+#define BUFF_MAX    20479
 
 
 
@@ -24,7 +24,7 @@ static int tid1;
 int b[1000];
 char g[1000];
 int pointSum;
-int d[300][6];
+int d[500][6];
 
 
 void mpUsrRoot(int arg1, int arg2, int arg3, int arg4, int arg5,

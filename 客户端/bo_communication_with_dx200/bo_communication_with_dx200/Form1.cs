@@ -351,7 +351,7 @@ namespace bo_communication_with_dx200
                 Image<Gray, byte> scr2 = new Image<Gray, byte>(scr.Width, scr.Height);
                 CvInvoke.CvtColor(scr, scr1, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
                 //图像类型转换，bgr 转成 gray 类型。
-                CvInvoke.Threshold(scr1, scr2, 50, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
+                CvInvoke.Threshold(scr1, scr2, 100, 255, Emgu.CV.CvEnum.ThresholdType.Binary);
                 //对图像进行二值化操作。
               scr2.Save(PictureProcessedAddress);
               pictureBox3.Load(PictureProcessedAddress);
@@ -379,7 +379,7 @@ namespace bo_communication_with_dx200
                            TransformResult= coordinationTransformation.sub((double)i, (double)j);
                            p1[k] = TransformResult[0].ToString();
                            p1[k + 1] = TransformResult[1].ToString();
-                            p1[k + 2] = (-209181).ToString();
+                           p1[k + 2] = (-228878).ToString();
                             p1[k + 3] = (-1789992).ToString();
                             p1[k + 4] = (-315122).ToString();
                             p1[k + 5] = (65610).ToString();
@@ -387,12 +387,14 @@ namespace bo_communication_with_dx200
                           //  L.X = i; L.Y = j;
                         //    CvInvoke.Circle(scr2, L, 1, new MCvScalar(0, 0, 255, 255), 10, LineType.EightConnected);
 
+                            listBox3.Items.Add("第" + (k / 6 + 1).ToString() + "个点的X,Y坐标：" + "\t\t" + TransformResult[0].ToString() + "\t\t" + TransformResult[1].ToString());
+
                             break;
                         }
 
                         else temp1++;
                     }
-                    j = j + 10;
+                    j = j + 10;//每20行检测一次，看是否有轨迹点
                 }
                 while (j < scr2.Rows - 20);
 

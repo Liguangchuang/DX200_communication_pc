@@ -21,7 +21,7 @@ namespace bo_communication_with_dx200
         {
             double a = -1.3184;double b = 3.1416;double c=-3.0828;
             int[] result = new int[2];
-            double x0 = 0; double y0 = 0; double z0 = -209181;
+            double x0 = 0; double y0 = 0; double z0 = -228878;
 
             Matrix<double> V = new Matrix<double>(1, 3);
             V.Data[0, 0] = x0;
@@ -67,7 +67,7 @@ namespace bo_communication_with_dx200
             Matrix<double> U = new Matrix<double>(1, 3);
             U.Data[0, 0] = 898220;
             U.Data[0, 1] = -333120;
-            U.Data[0, 2] = -209181;
+            U.Data[0, 2] = -228878;
 
 
             Matrix<double> S1 = new Matrix<double>(1, 3);
